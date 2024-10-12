@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Specifies the character encoding for the HTML document -->
+    <meta charset="UTF-8">
+    <!-- Ensures the web page is properly displayed on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the web page -->
+    <title>E-PostPro</title>
+    <!-- Link to the website's favicon -->
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/0yBqyfhK/febd01b7-4a4e-4bfe-960c-2e6915971f5c-modified.png">
+    <!-- Link to external stylesheet for custom styles -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <!-- Link to Bootstrap CSS for responsive design and components -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Link to Font Awesome for additional icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <!-- Another link to Font Awesome for the latest version with integrity check and crossorigin attributes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <!-- Header section containing the website's navigation bar -->
+    <header class="header">
+        <div class="portfolio" id="portfolio">
+            <!-- Website logo/title with a link to the home section -->
+            <a href="#"><h2>E-Post<span class="skin">Pro</span></h2></a>
+        </div>
+        <input type="checkbox" id="menu-bar">
+        <label for="menu-bar"><i class='bx bx-menu-alt-right' id="hamburger"></i></label>
+        <!-- Navigation menu -->
+        <nav>
+            <menu class="navbar-nav">
+                <!-- Navigation links to different sections of the page -->
+                <li><a href="#" id="homeLink">Home</a></li>
+                <li><a href="#chatSection">Email generator</a></li>
+                <li><a href="#tutorial" id="tutorialLink">Tutorial</a></li>
+            </menu>
+        </nav>
+        <div class="language-switcher">
+            <select id="languageSelect">
+                <option value="en">EN</option>
+                <option value="nl">NL</option>
+            </select>
+        </div>
+    </header>
+    <!-- Main home section with welcoming content -->
+    <section class="home" id="home">
+        <div class="home-detail">
+            <h3 data-en="Welcome to" data-nl="Welkom bij">Welcome to</h3>
+            <h1 class="skin" data-en="E-PostPro" data-nl="E-PostPro">E-PostPro</h1>
+            <h3 data-en="your personal AI email assistant!" data-nl="uw persoonlijke AI e-mailassistent!">your personal AI email assistant!</h3>
+            <p data-en="Let me handle the spelling, grammar, and phrasing, so you can focus on what truly matters. Ready to revolutionize your email experience? Let’s get started!" 
+               data-nl="Laat mij de spelling, grammatica en zinsopbouw verzorgen, zodat u zich kunt concentreren op wat echt belangrijk is. Klaar om uw e-mailervaring te revolutioneren? Laten we beginnen!">
+               Let me handle the spelling, grammar, and phrasing, so you can focus on what truly matters. Ready to revolutionize your email experience? Let’s get started!
+            </p>
+            <a href="#chatSection" class="btn" id="startButton" data-en="Start" data-nl="Begin">Start</a>
+        </div>
+        <figure class="home-img">
+            <div class="hero-pic">
+                <!-- Image associated with the home section -->
+                <img src="https://i.postimg.cc/K4h2xvWq/febd01b7-4a4e-4bfe-960c-2e6915971f5c.jpg" alt="Profile-picture">
+            </div>
+        </figure>
+    </section>
+    <!-- Chat section initially hidden -->
+    <section class="center hide" id="chatSection">
+        <article class="chat-card">
+            <!-- Header of the chat card containing user image and status -->
+            <header class="chat-header">
+                <div class="chat-header-content">
+                    <div class="image-container">
+                        <img src="https://i.postimg.cc/K4h2xvWq/febd01b7-4a4e-4bfe-960c-2e6915971f5c.jpg" class="rounded-circle user-image">
+                        <span class="status-icon online"></span>
+                    </div>
+                    <!-- User details -->
+                    <hgroup class="user-details">
+                        <span>E-PostPro</span>
+                        <p>Powered by OpenAi</p>
+                    </hgroup>
+                </div>
+                <!-- Dropdown for language selection -->
+            </header>
+            <!-- Body of the chat displaying messages -->
+            <div class="chat-body" id="chatBody">
+                <div class="message-received">
+                    <div class="image-message-container">
+                        <img src="https://i.postimg.cc/K4h2xvWq/febd01b7-4a4e-4bfe-960c-2e6915971f5c.jpg" class="rounded-circle user-image-message">
+                    </div>
+                    <div class="message-container">
+                        <p class="pre-wrap" data-en="Welcome! Please enter your email to start the chat." data-nl="Welkom! Voer uw e-mailadres in om de chat te starten.">Welcome! Please enter your email to start the chat.</p>
+                        <span class="message-time"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Dropdown for tone selection, initially hidden -->
+            <div class="tone-selection" id="toneSelection" style="display: none;">
+                <select id="toneSelect">
+                    <option value="informal" data-en="Informal" data-nl="Informeel">Informal</option>
+                    <option value="formal" data-en="Formal" data-nl="Formeel">Formal</option>
+                </select>
+                <button id="selectToneButton" data-en="Select Button" data-nl="Selecteer Knop">Select button</button>
+            </div>            
+            <!-- Button to send email, initially hidden -->
+            <button id="emailButton" class="email-btn" data-en="Send Email" data-nl="E-mail Verzenden" style="display: none;">Use Email</button>
+            <!-- Chat footer with input area -->
+            <div class="chat-footer">
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <span class="input-group-text attach-btn">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                        </span>
+                    </div>
+                    <textarea id="messageInput" class="form-control message-input" placeholder="Type your message..."></textarea>
+                    <div class="input-group-append">
+                        <span class="input-group-text send-btn"><i class="fas fa-location-arrow"></i></span>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+    <!-- Tutorial section initially hidden -->
+    <section class="tutorial hide" id="tutorialSection">
+        <div class="wrapper">
+            <h1>E-Post<span>Pro</span> <span class="underline">Tutorial</span></h1>
+            <video  id="tutorialVideo" src="video/tutorial.mp4" controls></video>
+            <div class="text-box">
+                <h2> <span data-en="About" data-nl="Over" class="underline">About</span></h2>
+                <p data-en="To gain a thorough and complete understanding of how E-postPro operates, I encourage you to watch the detailed video provided below. This video will walk you through all the key features and functionalities, offering a clear insight into how E-postPro can benefit you." 
+                   data-nl="Om een grondig en volledig begrip te krijgen van hoe E-postPro werkt, raad ik u aan om de gedetailleerde video hieronder te bekijken. Deze video leidt u door alle belangrijke functies en mogelijkheden en biedt een duidelijk inzicht in hoe E-postPro u kan helpen.">
+                   To gain a thorough and complete understanding of how E-postPro operates, I encourage you to watch the detailed video provided below. This video will walk you through all the key features and functionalities, offering a clear insight into how E-postPro can benefit you.
+                </p>
+                <p data-en="Once you've finished watching and are ready to give E-postPro a try, simply press the start button below."
+                   data-nl="Zodra u klaar bent met kijken en klaar bent om E-postPro te proberen, drukt u gewoon op de startknop hieronder.">
+                   Once you've finished watching and are ready to give E-postPro a try, simply press the start button below.
+                </p>
+                <a href="#chatSection" class="btn" id="startButton" data-en="Start" data-nl="Begin">Start</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- External JavaScript files -->
+    <script src="js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/hamburger.js"></script>
+    <script src="js/pausevid.js"></script>
+    <!-- <script src="js/red.js"></script> -->
+</body>
+</html>
