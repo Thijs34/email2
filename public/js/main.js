@@ -1,13 +1,18 @@
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Select essential DOM elements
-    const sendButton = document.querySelector('.send-btn'); // Button to send messages
-    const messageInput = document.getElementById('messageInput'); // Input field for user messages
-    const chatBody = document.getElementById('chatBody'); // Container for chat messages
-    const emailButton = document.getElementById('emailButton'); // Button to send email
-    const languageSelect = document.getElementById('languageSelect'); // Dropdown for language selection
-    const toneSelection = document.getElementById('toneSelection'); // Container for tone selection options
-    const selectToneButton = document.getElementById('selectToneButton'); // Button to confirm tone selection
-    const resetButton = document.querySelector('.attach-btn'); // Button to reset the chat
+document.addEventListener('DOMContentLoaded', () => {
+    const sendButton = document.querySelector('.send-btn');
+    const messageInput = document.getElementById('messageInput');
+    const chatBody = document.getElementById('chatBody');
+    const emailButton = document.getElementById('emailButton');
+    const languageSelect = document.getElementById('languageSelect');
+    const toneSelection = document.getElementById('toneSelection');
+    const selectToneButton = document.getElementById('selectToneButton');
+    const resetButton = document.querySelector('.attach-btn');
+
+    // Check if all required elements exist before proceeding
+    if (!sendButton || !messageInput || !chatBody || !emailButton || !languageSelect || !toneSelection || !selectToneButton || !resetButton) {
+        console.error("One or more required elements are missing. Please ensure all elements are present.");
+        return;
+    }
 
     // State variables to store user inputs and selections
     let currentStep = 'userEmail'; // Current step in the message flow
@@ -204,23 +209,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
 
+   
     // Function to send a prompt to the server and handle the response
-    async function sendPrompt(promptText) {
-        try {
-            const response = await fetch('/api/chat', {  // Change to '/api/chat'
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt: promptText }),
-            });
-    
-            const data = await response.json();
-            console.log('AI response:', data.reply);
-        } catch (error) {
-            console.error('Error:', error);
+async function sendPrompt(promptText) {
+    appendMessage('received', 'Prompt: ' + promptText, 'promptText');
+
+    try {
+        const response = await fetch('/api/chat', {  // Update path to match Vercel's API routing
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ prompt: promptText })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            generatedEmail = data.reply;
+            appendMessage('received', generatedEmail);
+            appendMessage('received', getTranslation('endMessage'), 'endMessage');
+
+            emailButton.style.display = 'block';
+            currentStep = 'prompt';
+        } else {
+            appendMessage('received', getTranslation('errorResponse'), 'errorResponse');
         }
+    } catch (error) {
+        console.error('Error:', error);
+        appendMessage('received', getTranslation('errorResponse'), 'errorResponse');
     }
+}
+
 
     // Function to generate the final prompt for the server based on user inputs
     function generatePrompt() {
@@ -235,17 +254,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Function to send the generated email using mailto link
     function sendEmail() {
         let chatResponse = generatedEmail;
-
+    
         let subject = "Chat Response";
         const subjectMatch = chatResponse.match(/^(Subject|Onderwerp): (.+)$/m);
         if (subjectMatch) {
             subject = subjectMatch[2];
             chatResponse = chatResponse.replace(subjectMatch[0], '').trim();
         }
-
+    
         const body = chatResponse;
-
-        const recipientEmailsFormatted = recipientEmails.split(' ').join(';');
+        const recipientEmailsFormatted = recipientEmails.split(' ').join(';');  // Format multiple emails correctly
         const mailtoLink = `mailto:${recipientEmailsFormatted}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}&cc=${encodeURIComponent(userEmail)}`;
         window.location.href = mailtoLink;
     }
