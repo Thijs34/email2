@@ -206,27 +206,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Function to send a prompt to the server and handle the response
     async function sendPrompt(promptText) {
-        appendMessage('received', 'Prompt: ' + promptText, 'promptText');
-
         try {
-            const response = await fetch('/chat', {
+            const response = await fetch('/api/chat', {  // Change to '/api/chat'
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ prompt: promptText })
+                body: JSON.stringify({ prompt: promptText }),
             });
-
+    
             const data = await response.json();
-            generatedEmail = data.reply;
-            appendMessage('received', generatedEmail);
-            appendMessage('received', getTranslation('endMessage'), 'endMessage');
-
-            emailButton.style.display = 'block';
-            currentStep = 'prompt';
+            console.log('AI response:', data.reply);
         } catch (error) {
             console.error('Error:', error);
-            appendMessage('received', getTranslation('errorResponse'), 'errorResponse');
         }
     }
 
